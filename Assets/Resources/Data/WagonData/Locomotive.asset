@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7b17dd9a4c2804586d66e8598a5a92, type: 3}
+  m_Name: Locomotive
+  m_EditorClassIdentifier: 
+  Name: Locomotive
+  WagonPrefab: {fileID: 6871400936618260814, guid: aaa61d9963c015c458df574e090190b7,
+    type: 3}
+  Thumbnail: {fileID: 0}
+  Weight: 10
+  Cost: 100
+  Description: MovesShit
