@@ -59,11 +59,17 @@ public class TerrainGenerator : MonoBehaviour
                 GenerateSegment();
             }
         }
+        
+        while (Vector3.Distance(generatedSegments[0].transform.position, vehicle.backPoint) > generationDistance)
+        {
+            var temp = generatedSegments[0];
+            generatedSegments.Remove(temp);
+            Destroy(temp.gameObject);
+        }
     }
 
     private void GenerateSegment()
     {
-        
         var generatedSegment = Instantiate(segmentPrefabs[Random.Range(0, segmentPrefabs.Count)],
             Vector3.forward * -100, Quaternion.identity, transform).GetComponent<Segment>();
         var selectedJointToSnap = generatedSegment.joints[Random.Range(0, generatedSegment.joints.Count)];
