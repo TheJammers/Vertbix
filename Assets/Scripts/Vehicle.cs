@@ -25,10 +25,7 @@ public class Vehicle : MonoBehaviour
     private void Awake()
     {
         Wagons = new List<Wagon>();
-    }
-
-    private void Start()
-    {
+        
         if (PlayerPrefs.HasKey(saveName))
         {
             foreach (var wagonName in PlayerPrefs.GetString(saveName).Split(','))
@@ -43,9 +40,6 @@ public class Vehicle : MonoBehaviour
                     Debug.Log("Cant find wagon for: " + wagonName);
                 }
             }
-            
-            
-            //AddWagon(GameManager.Instance.WagonData.FirstOrDefault(x => x.Name == "Vagon1"));
         }
         else
         {
@@ -53,7 +47,7 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    void AddWagon(WagonData data)
+    public void AddWagon(WagonData data)
     {
         Wagon newWagon = Instantiate(data.WagonPrefab, transform.position,
             Quaternion.identity, transform);

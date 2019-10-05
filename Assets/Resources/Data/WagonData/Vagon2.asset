@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Vagon2
   WagonPrefab: {fileID: 4282280230024727731, guid: 5ba501485d5e253419b94e4d33f30f6b,
     type: 3}
-  Thumbnail: {fileID: 0}
+  Thumbnail: {fileID: 21300000, guid: 6a81e3452046418428281998ac9f166e, type: 3}
   Weight: 10
   Cost: 200
   Description: shit

@@ -8,11 +8,11 @@ public class TerrainGenerator : MonoBehaviour
 {
     [SerializeField] private float generationDistance;
     [SerializeField] private List<GameObject> segmentPrefabs;
-    [SerializeField] private Vector3 startPoint;
 
     [SerializeField] private GameObject startSegment;
     private List<Segment> generatedSegments;
 
+    private Vehicle vehicle;
     //[SerializeField] private Vector3 direction;
 
     private bool generating;
@@ -25,8 +25,9 @@ public class TerrainGenerator : MonoBehaviour
 
     public void StartGeneration()
     {
-        generatedSegments.Add(Instantiate(startSegment, startPoint, Quaternion.identity).GetComponent<Segment>());
-        GenerateTerrainWhileNeeded();
+        vehicle = GameManager.Instance.vehicleMovement.GetVehicle();
+        generatedSegments.Add(Instantiate(startSegment, new Vector3(vehicle.backPoint.x, 0,vehicle.backPoint.x - generationDistance), Quaternion.identity, transform).GetComponent<Segment>());
+        GenerateTerrainWhileNeeded(true);
         
         generating = true;
     }
@@ -36,16 +37,27 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (generating)
         {
-            GenerateTerrainWhileNeeded();
+            GenerateTerrainWhileNeeded(false);
         }
     }
 
-    void GenerateTerrainWhileNeeded()
+    void GenerateTerrainWhileNeeded(bool initial)
     {
-        while (Vector3.Distance(generatedSegments.Last().transform.position,
-                   GameManager.Instance.vehicleMovement.GetVehicle().transform.position) < generationDistance)
+        if (initial)
         {
-            GenerateSegment();
+            while (Vector3.Distance(generatedSegments.Last().transform.position,
+                       GameManager.Instance.vehicleMovement.GetVehicle().frontPoint) > generationDistance)
+            {
+                GenerateSegment();
+            }
+        }
+        else
+        {
+            while (Vector3.Distance(generatedSegments.Last().transform.position,
+                       GameManager.Instance.vehicleMovement.GetVehicle().frontPoint) < generationDistance)
+            {
+                GenerateSegment();
+            }
         }
     }
 
@@ -53,7 +65,7 @@ public class TerrainGenerator : MonoBehaviour
     {
         
         var generatedSegment = Instantiate(segmentPrefabs[Random.Range(0, segmentPrefabs.Count)],
-            Vector3.forward * -100, Quaternion.identity).GetComponent<Segment>();
+            Vector3.forward * -100, Quaternion.identity, transform).GetComponent<Segment>();
         var selectedJointToSnap = generatedSegment.joints[Random.Range(0, generatedSegment.joints.Count)];
         Transform jointToSnap;
         

@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: Locomotive
   WagonPrefab: {fileID: 6871400936618260814, guid: aaa61d9963c015c458df574e090190b7,
     type: 3}
-  Thumbnail: {fileID: 0}
+  Thumbnail: {fileID: 21300000, guid: 282d4b8a41e14ae43877963b1d524edd, type: 3}
   Weight: 10
   Cost: 100
   Description: MovesShit

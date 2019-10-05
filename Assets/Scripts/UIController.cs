@@ -1,13 +1,14 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] private float upgradeButtonScoreShow = 25;
-    [SerializeField] private Button upgradeButton;
-    [SerializeField]
-    private Text scoreText;
+    [SerializeField] private Button shopButton;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private WagonShop shop;
 
     private void Start()
     {
@@ -18,17 +19,22 @@ public class UIController : MonoBehaviour
     private void UpdateScore(float score)
     {
         scoreText.text = "Score: " + (int)score;
-        if (score >= upgradeButtonScoreShow && !upgradeButton.gameObject.activeSelf)
+        if (score >= upgradeButtonScoreShow && !shopButton.gameObject.activeSelf)
         {
-            upgradeButton.gameObject.SetActive(true);
+            shopButton.gameObject.SetActive(true);
         }
     }
 
     public void ShowShop()
     {
-        foreach (var wagon in GameManager.Instance.WagonData)
-        {
-            
-        }
+        shopButton.gameObject.SetActive(false);
+        shop.gameObject.SetActive(true);
+        shop.Populate(GameManager.Instance.WagonData);
+    }
+
+    public void CloseShop()
+    {
+        shop.gameObject.SetActive(false);
+        shopButton.gameObject.SetActive(true);
     }
 }

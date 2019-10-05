@@ -8,7 +8,7 @@ public class VehicleMovement : MonoBehaviour
     private float movementSpeed = 1;
     private bool active;
     [SerializeField]
-    public GameObject vehicleObject;
+    public Vehicle vehicleObject;
 
     [SerializeField] private GameObject vehiclePrefab;
     // Start is called before the first frame update
@@ -19,7 +19,7 @@ public class VehicleMovement : MonoBehaviour
 
     public void Init(Vector3 startPosition, Vector3 startRotation)
     {
-        vehicleObject = Instantiate(vehiclePrefab, startPosition, Quaternion.Euler(startRotation));
+        vehicleObject = Instantiate(vehiclePrefab, startPosition, Quaternion.Euler(startRotation)).GetComponent<Vehicle>();
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class VehicleMovement : MonoBehaviour
         active = false;
     }
 
-    public GameObject GetVehicle()
+    public Vehicle GetVehicle()
     {
         return vehicleObject;
     }

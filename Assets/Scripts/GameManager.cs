@@ -8,15 +8,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<WagonData> WagonData;  
+    [HideInInspector] public List<WagonData> WagonData;  
     public static GameManager Instance;
     [SerializeField] private float scoreMiltiplier;
     [SerializeField] private float screIncrease;
     [SerializeField] private float scoreIncreaseTime = 1000;
     [SerializeField] private Vector3 vehicleStartPosition;
     [SerializeField] private Vector3 vehicleStartRotation;
-    [SerializeField] public VehicleMovement vehicleMovement;
-    [SerializeField] public TerrainGenerator terrainGenerator;
+    [HideInInspector] public TerrainGenerator terrainGenerator;
+    [HideInInspector] public VehicleMovement vehicleMovement;
     public delegate void ScoreChangedDelegate(float score);
 
     public event ScoreChangedDelegate ScoreChangedEvent;
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     private Vector3 lastPosition;
     private void Awake()
     {
+        terrainGenerator = FindObjectOfType<TerrainGenerator>();
+        vehicleMovement = FindObjectOfType<VehicleMovement>();
         WagonData = Resources.LoadAll<WagonData>("Data/WagonData").ToList();
         if (PlayerPrefs.HasKey("Score"))
         {
@@ -68,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void AddScore(float scoreToAdd)
+    public void AddScore(float scoreToAdd)
     {
         var newScore = Score + scoreToAdd;
         
@@ -76,11 +78,32 @@ public class GameManager : MonoBehaviour
         {
             if (ScoreChangedEvent != null)
             {
-                PlayerPrefs.SetFloat("Score" ,Score);
+                PlayerPrefs.SetFloat("Score" ,newScore);
                 ScoreChangedEvent(newScore);
             }
         }
         
         Score = newScore;
+    }
+    
+    public bool RemoveScore(float scoreToRemove)
+    {
+        var newScore = Score - scoreToRemove;
+        bool canRemove = newScore >= 0;
+        if (canRemove)
+        {
+            if ((int) Score != (int) newScore)
+            {
+                if (ScoreChangedEvent != null)
+                {
+                    PlayerPrefs.SetFloat("Score", newScore);
+                    ScoreChangedEvent(newScore);
+                }
+            }
+
+            Score = newScore;
+        }
+
+        return canRemove;
     }
 }
