@@ -66,6 +66,8 @@ public class TerrainGenerator : MonoBehaviour
             generatedSegments.Remove(temp);
             Destroy(temp.gameObject);
         }
+        
+        GameManager.Instance.navMeshSurface.BuildNavMesh();
     }
 
     private void GenerateSegment()

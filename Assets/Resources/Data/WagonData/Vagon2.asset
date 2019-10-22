@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7b17dd9a4c2804586d66e8598a5a92, type: 3}
   m_Name: Vagon2
   m_EditorClassIdentifier: 
+  WagonDialog: {fileID: -532601799547424110, guid: 84b56857119166443928935c947c98a8,
+    type: 3}
   Name: Vagon2
-  WagonPrefab: {fileID: 4282280230024727731, guid: 5ba501485d5e253419b94e4d33f30f6b,
+  WagonPrefab: {fileID: 7139314332557562586, guid: 5ba501485d5e253419b94e4d33f30f6b,
     type: 3}
   Thumbnail: {fileID: 21300000, guid: 6a81e3452046418428281998ac9f166e, type: 3}
   Weight: 10
   Cost: 200
-  Description: shit
+  Description: The other Shit
+  ID: Vagon2

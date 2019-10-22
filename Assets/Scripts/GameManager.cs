@@ -5,22 +5,29 @@ using System.Linq;
 using System.Timers;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public List<WagonData> WagonData;  
+    [HideInInspector] public List<TowerData> TowerData;  
     public static GameManager Instance;
     [SerializeField] private float scoreMiltiplier;
     [SerializeField] private float screIncrease;
     [SerializeField] private float scoreIncreaseTime = 1000;
     [SerializeField] private Vector3 vehicleStartPosition;
     [SerializeField] private Vector3 vehicleStartRotation;
-    [HideInInspector] public TerrainGenerator terrainGenerator;
-    [HideInInspector] public VehicleMovement vehicleMovement;
+    public VehicleMovement vehicleMovement;
+    public TerrainGenerator terrainGenerator;
+    public NavMeshSurface navMeshSurface;
+    public UIController uiController;
+    
     public delegate void ScoreChangedDelegate(float score);
 
     public event ScoreChangedDelegate ScoreChangedEvent;
     public float Score { get; set; }
+    
+    public float TotalScore { get; set; }
 
     private Timer scoreIncreaseTimer;
 
@@ -29,11 +36,12 @@ public class GameManager : MonoBehaviour
     {
         terrainGenerator = FindObjectOfType<TerrainGenerator>();
         vehicleMovement = FindObjectOfType<VehicleMovement>();
+        navMeshSurface = FindObjectOfType<NavMeshSurface>();
+        uiController = FindObjectOfType<UIController>();
         WagonData = Resources.LoadAll<WagonData>("Data/WagonData").ToList();
-        if (PlayerPrefs.HasKey("Score"))
-        {
-            Score = PlayerPrefs.GetFloat("Score");
-        }
+        TowerData = Resources.LoadAll<TowerData>("Data/TowerData").ToList();
+        Score = PlayerPrefs.GetFloat("Score", 0);
+        TotalScore = PlayerPrefs.GetFloat("TotalScore", 0);
         Instance = this;
     }
 
@@ -78,14 +86,24 @@ public class GameManager : MonoBehaviour
         {
             if (ScoreChangedEvent != null)
             {
-                PlayerPrefs.SetFloat("Score" ,newScore);
                 ScoreChangedEvent(newScore);
             }
         }
-        
+
+        TotalScore += scoreToAdd;
         Score = newScore;
+        
+        Save();
     }
-    
+
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("Score", Score);
+        PlayerPrefs.SetFloat("TotalScore", TotalScore);
+        
+        PlayerPrefs.Save();
+    }
+
     public bool RemoveScore(float scoreToRemove)
     {
         var newScore = Score - scoreToRemove;
@@ -96,12 +114,13 @@ public class GameManager : MonoBehaviour
             {
                 if (ScoreChangedEvent != null)
                 {
-                    PlayerPrefs.SetFloat("Score", newScore);
                     ScoreChangedEvent(newScore);
                 }
             }
 
             Score = newScore;
+            
+            Save();
         }
 
         return canRemove;

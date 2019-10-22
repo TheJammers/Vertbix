@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba31400ea22b3ef468f3de0d2ede056d, type: 3}
+  m_Name: CanonTower
+  m_EditorClassIdentifier: 
+  Name: Canon
+  TowerPrefab: {fileID: 8727773483582595217, guid: 2a4ca24e832dfd642aa4b8f671b03755,
+    type: 3}
+  TowerDialog: {fileID: 1047661204406991386, guid: 554bf92cef9135644bd42cb32a724b3e,
+    type: 3}
+  Thumbnail: {fileID: 21300000, guid: e83fd0576e06fc74a8bac0c704f5b2e4, type: 3}
+  Cost: 100
+  Description: A canon
+  ID: Canon

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7b17dd9a4c2804586d66e8598a5a92, type: 3}
   m_Name: Locomotive
   m_EditorClassIdentifier: 
+  WagonDialog: {fileID: 6522654567339969783, guid: 6a61da2d007344347ac1d00ba49fb9ee,
+    type: 3}
   Name: Locomotive
   WagonPrefab: {fileID: 6871400936618260814, guid: aaa61d9963c015c458df574e090190b7,
     type: 3}
@@ -19,3 +21,4 @@ MonoBehaviour:
   Weight: 10
   Cost: 100
   Description: MovesShit
+  ID: Locomotive
